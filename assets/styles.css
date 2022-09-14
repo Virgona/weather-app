@@ -1,3 +1,11 @@
 h1 {
     text-align: center;
 }
+
+aside {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    margin: auto;
+    width: auto;
+}
