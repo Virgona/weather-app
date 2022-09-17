@@ -3,9 +3,37 @@ h1 {
 }
 
 aside {
+    padding-left: 15px;
+}
+
+input {
+    width: 300px;
+}
+
+.box {
     display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    margin: auto;
-    width: auto;
+    flex-direction: row;
+    justify-content: space-around;
+    height: 100%;
+}
+
+#search-el {
+    align-self: flex-start;
+}
+
+.button-search {
+    width: 300px;
+    margin-top: 5px;
+}
+
+#previous-cities {
+
+    width: 300px;
+    margin-top: 5px;
+    border-top: 2px solid black;
+}
+
+#city-display {
+    align-items: center;
+    margin: 0;
 }
