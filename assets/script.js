@@ -67,13 +67,14 @@ function cityWeather() {
                     $('#uv').html(uvData.value);
                     let uvIndexValue = uvData.value;
 
-                    if (uvIndexValue > 5) {
-                        $('#uv').css('background-color', 'red')
+                    if (uvIndexValue < 3) {
+                        $('#uv').css('background-color', 'green')
 
-                        if (uvIndexValue > 2) {
-                            $('#uv').css('background-color', 'orange')
-                        }
-                    } else $('#uv').css('background-color', 'green')
+                    }
+                    if (uvIndexValue <= 5) {
+                        $('#uv').css('background-color', 'orange')
+
+                    } else $('#uv').css('background-color', 'red')
 
                     let currentDate = uvData.date_iso.slice(0, 10)
                     cityDisplayName.append(' (' + currentDate + ')')
@@ -96,10 +97,10 @@ function cityWeather() {
                         $('#next-5-days').append(`<div class="card bg-light mb-3"><div class="card-header"></div><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div>`)
                     }
 
-                    // let forecastDates = forecastData.list[0]
+                    let forecastDates = forecastData.list
 
-                    // for (const date of forecastDates)
-                    //     $('.card-header').text(forecastData.list[0].dt_txt)
+                    for (const date of forecastDates)
+                        $('.card-header').text(forecastData.list[0].dt_txt.slice(0, 10))
                     // console.log(forecastData.list[0].dt_txt)
                     // forecastDates++;
                     // $('.card-body').append(`<div>Temp: forecastData.list[0].main.temp </br> Wind: forecastData.list[0].wind.speed MPH`)
