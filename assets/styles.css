@@ -37,3 +37,9 @@ input {
     align-items: center;
     margin: 0;
 }
+
+#uv {
+    border-radius: 25px;
+    padding: 5px;
+
+}

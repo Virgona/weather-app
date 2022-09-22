@@ -1,15 +1,17 @@
 const searchBtn = $('#searching');
-let searchedCity = $("#myInput").val().trim();
+let searchedCity;
 let cityDisplayName = $('#city-name');
 let apiUrl = 'http://api.openweathermap.org/data/2.5/';
 const apiKey = '051f2bb3cfd048b3c5135242dc4d2da7';
+
 //stores search result in local storage
 searchBtn.click(function (event) {
     event.preventDefault()
-    let searchedCity = $("#myInput").val().trim();
+    searchedCity = $("#myInput").val().trim();
+    console.log('once clicked, searchedCity contains: ', searchedCity)
     localStorage.setItem('city', searchedCity);
     console.log(searchedCity);
-    cityDisplayName.html(searchedCity);
+    // cityDisplayName.html(searchedCity);
     makeButton()
 
 });
@@ -25,12 +27,61 @@ function makeButton() {
 //after a city has been input. grabs info from the openWeather API
 
 function cityWeather() {
-    let searchedCity = $("#myInput").val().trim();
+    // let searchedCity = $("#myInput").val().trim();
     let cityWeatherURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + searchedCity + "&limit=1&appid=" + apiKey;
-    fetch(cityWeatherURL)
+    let testUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchedCity}&units=metric&appid=${apiKey}`;
+    fetch(testUrl)
         .then(function (response) {
             console.log(response);
-            console.log(cityWeatherURL);
+            console.log(testUrl);
             return response.json();
+        })
+        .then(function (coordData) {
+            console.log(coordData)
+            let lat = coordData.coord.lat;
+            let lon = coordData.coord.lon;
+            // console.log(lat, lon);
+            cityDisplayName.html(coordData.name);
+            $('#temp').html(coordData.main.temp);
+            $('#humidity').html(coordData.main.humidity + ' %');
+            $('#wind').html(coordData.wind.speed + ' MPH');
+
+            fetch(`https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`)
+                .then(function (response) {
+                    console.log(response)
+                    return response.json();
+                })
+                .then(function (uvData) {
+                    console.log(uvData)
+                    $('#uv').html(uvData.value);
+                    let uvIndexValue = uvData.value;
+
+                    if (uvIndexValue > 5) {
+                        $('#uv').css('background-color', 'red')
+                    } else $('#uv').css('background-color', 'green')
+                })
+
+            // fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${apiKey}`)
+            //     .then(function (response) {
+            //         console.log(response);
+            //         return response.json();
+            //     })
+            //     .then(function (weatherData) {
+            //         console.log(weatherData);
+            //     })
+            // let base = data.base; // "stations"
+            // let latitude = data.coords.lat; // -33 
+            // let todaysWeatherSummary = data.weather[0].main; // "Rain"
+
+            // extract the lat and lon
+            // concatenate those variables into the oneCall api url
+            // -- https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=hourly&appid={API key}
+            // make another fetch
+            // -- then convert the respons to json
+            // -- -- then look at the data
+            // -- -- extract the data you want
+            // -- -- reach into the html grabe the elemtn you want
+            // -- -- stuff you data into the html element
+
         });
 }
