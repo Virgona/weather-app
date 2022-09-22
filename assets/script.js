@@ -28,7 +28,6 @@ function makeButton() {
 
 function cityWeather() {
     // let searchedCity = $("#myInput").val().trim();
-    let cityWeatherURL = "http://api.openweathermap.org/geo/1.0/direct?q=" + searchedCity + "&limit=1&appid=" + apiKey;
     let testUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchedCity}&units=metric&appid=${apiKey}`;
     fetch(testUrl)
         .then(function (response) {
@@ -59,6 +58,15 @@ function cityWeather() {
                     if (uvIndexValue > 5) {
                         $('#uv').css('background-color', 'red')
                     } else $('#uv').css('background-color', 'green')
+                })
+
+            fetch(`https://api.openweathermap.org/data/2.5/forecast?=lat=${lat}&lon=${lon}&appid=${apiKey}`)
+                .then(function (response) {
+                    console.log(response)
+                    return response.json()
+                })
+                .then(function (forecastData) {
+                    console.log(forecastData)
                 })
 
             // fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${apiKey}`)

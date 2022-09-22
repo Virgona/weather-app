@@ -24,6 +24,7 @@ input {
 .button-search {
     width: 300px;
     margin-top: 5px;
+    text-transform: capitalize;
 }
 
 #previous-cities {
