@@ -46,8 +46,12 @@ input {
 
 }
 
-#content {
+#next-5-days {
     display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card.bg-light.mb-3 {
+    width: 100px;
+    margin: 0 10px;
 }
