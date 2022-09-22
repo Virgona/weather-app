@@ -38,7 +38,7 @@ function makeButton() {
 //after a city has been input. grabs info from the openWeather API
 
 function cityWeather() {
-    // let searchedCity = $("#myInput").val().trim();
+
     let testUrl = `https://api.openweathermap.org/data/2.5/weather?q=${searchedCity}&units=metric&appid=${apiKey}`;
     fetch(testUrl)
         .then(function (response) {
@@ -50,7 +50,8 @@ function cityWeather() {
             console.log(coordData)
             let lat = coordData.coord.lat;
             let lon = coordData.coord.lon;
-            // console.log(lat, lon);
+
+            // loads the weather information onto the page for current day
             cityDisplayName.html(coordData.name);
             $('#temp').html(coordData.main.temp + '&#8451;');
             $('#humidity').html(coordData.main.humidity + ' %');
@@ -59,6 +60,8 @@ function cityWeather() {
             let iconCode = coordData.weather[0].icon;
             let iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
             $('#wicon').attr('src', iconUrl);
+
+            //gets the latitude and longitude for the UV Index reading and loads it to the page. Also changes the CSS depending on severity
 
             fetch(`https://api.openweathermap.org/data/2.5/uvi?lat=${lat}&lon=${lon}&units=metric&appid=${apiKey}`)
                 .then(function (response) {
@@ -84,7 +87,7 @@ function cityWeather() {
 
                 })
 
-
+            //fetchs the forecast for the next 5 days and displays the results dynamically on the page
 
             fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&cnt=5&units=metric&appid=${apiKey}`)
                 .then(function (response) {
@@ -95,10 +98,11 @@ function cityWeather() {
                     console.log(forecastData)
 
                     let forecastDates = forecastData.list
-                    let iconCode = forecastDates.weather[0].icon;
-                    let iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
 
                     for (const date of forecastDates) {
+                        let iconUrl = "http://openweathermap.org/img/w/" + date.weather[0].icon + ".png";
+
+
                         $('#next-5-days').append(`<div class="card bg-light mb-3">
                         <div class="card-header">${date.dt_txt}</div>
                         <div class="card-body">
@@ -113,31 +117,6 @@ function cityWeather() {
                         </p></div>`)
                     }
                 })
-
-
-
-
-            // fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${apiKey}`)
-            //     .then(function (response) {
-            //         console.log(response);
-            //         return response.json();
-            //     })
-            //     .then(function (weatherData) {
-            //         console.log(weatherData);
-            //     })
-            // let base = data.base; // "stations"
-            // let latitude = data.coords.lat; // -33 
-            // let todaysWeatherSummary = data.weather[0].main; // "Rain"
-
-            // extract the lat and lon
-            // concatenate those variables into the oneCall api url
-            // -- https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude=hourly&appid={API key}
-            // make another fetch
-            // -- then convert the respons to json
-            // -- -- then look at the data
-            // -- -- extract the data you want
-            // -- -- reach into the html grabe the elemtn you want
-            // -- -- stuff you data into the html element
 
         });
 }
