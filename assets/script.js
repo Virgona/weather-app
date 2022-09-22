@@ -21,13 +21,16 @@ searchBtn.click(function (event) {
 
 function makeButton() {
     let previouslySearched = localStorage.getItem('city')
-    $('#previous-cities').append('<button type="button" class="btn btn-sm btn-secondary button-search previous">' + previouslySearched + '</button>');
+    const buttonEl = $('<button type="button" class="btn btn-sm btn-secondary button-search previous">' + previouslySearched + '</button>')
+    $('#previous-cities').append(buttonEl);
     cityWeather()
 
-    let lastCityBtn = $('.previous');
-    lastCityBtn.click(function () {
-        searchedCity = $('.previous').text();
-        console.log(searchedCity)
+    // let lastCityBtn = $('.previous');
+    buttonEl.click(function () {
+        searchedCity = $(this).text();
+        console.log(searchedCity);
+        $("#myInput").val(searchedCity);
+        $("#searching").click();
     })
 }
 
@@ -91,20 +94,24 @@ function cityWeather() {
                 .then(function (forecastData) {
                     console.log(forecastData)
 
-                    let fiveDayForecast = forecastData.list.length;
-
-                    for (let i = 0; i < fiveDayForecast; i++) {
-                        $('#next-5-days').append(`<div class="card bg-light mb-3"><div class="card-header"></div><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div>`)
-                    }
-
                     let forecastDates = forecastData.list
+                    let iconCode = forecastDates.weather[0].icon;
+                    let iconUrl = "http://openweathermap.org/img/w/" + iconCode + ".png";
 
-                    for (const date of forecastDates)
-                        $('.card-header').text(forecastData.list[0].dt_txt.slice(0, 10))
-                    // console.log(forecastData.list[0].dt_txt)
-                    // forecastDates++;
-                    // $('.card-body').append(`<div>Temp: forecastData.list[0].main.temp </br> Wind: forecastData.list[0].wind.speed MPH`)
-                    // forecastData.list++;
+                    for (const date of forecastDates) {
+                        $('#next-5-days').append(`<div class="card bg-light mb-3">
+                        <div class="card-header">${date.dt_txt}</div>
+                        <div class="card-body">
+                        <h5 class="card-title">
+                        <div id="icon"><img src="${iconUrl}">
+                        </h5>
+                        <p class="card-text">
+                        Temp:${date.main.temp}&#8451;</br>
+                        Wind:${date.wind.speed}MPH</br>
+                        Hum:${date.main.humidity}%
+                        
+                        </p></div>`)
+                    }
                 })
 
 
