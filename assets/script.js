@@ -60,14 +60,25 @@ function cityWeather() {
                     } else $('#uv').css('background-color', 'green')
                 })
 
-            fetch(`https://api.openweathermap.org/data/2.5/forecast?=lat=${lat}&lon=${lon}&appid=${apiKey}`)
+            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&cnt=5&units=metric&appid=${apiKey}`)
                 .then(function (response) {
                     console.log(response)
                     return response.json()
                 })
                 .then(function (forecastData) {
                     console.log(forecastData)
+
+                    let fiveDayForecast = forecastData.list.length;
+
+                    for (let i = 0; i < fiveDayForecast; i++) {
+                        $('#next-5-days').append(`<div class="card bg-light mb-3" style="max-width: 18rem;"><div class="card-header"></div><div class="card-body"><h5 class="card-title"></h5><p class="card-text"></p></div>`)
+                        // $('.card-header').html(forecastData.list[0].dt_text)
+                        // $('.card-body').append(`<div>Temp: forecastData.list[0].main.temp </br> Wind: forecastData.list[0].wind.speed MPH`)
+                    }
                 })
+
+
+
 
             // fetch(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly&appid=${apiKey}`)
             //     .then(function (response) {

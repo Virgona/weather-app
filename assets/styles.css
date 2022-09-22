@@ -13,6 +13,7 @@ input {
 .box {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-around;
     height: 100%;
 }
@@ -43,4 +44,10 @@ input {
     border-radius: 25px;
     padding: 5px;
 
+}
+
+#content {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
