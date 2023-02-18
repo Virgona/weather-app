@@ -22,6 +22,14 @@ My poor time managment of this assignment has left me walking away ashamed. To n
 I had also overesimated my skills, percieving some tasks to be "easy" and then once going to execute them getting stuck for hours - like making the history buttons on the page. Making them dynamically search on a click was
 much harder than I anticipated
 
+## Usage
+
+1. User loads app page
+2. user enters the name of a city they wish to know the weather for into the search bar
+3. User is presented with its current weather and report over the next 5 days
+4. User inputs new city, current city is saved to the history tab and if click will bring its results back up
+
+
 ## The App
 
 check it out here [Weather App](https://virgona.github.io/weather-app/)
